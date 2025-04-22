@@ -115,6 +115,29 @@
             max-width: none; /* Убираем ограничение ширины */
             width: auto; /* Позволяем контейнеру растягиваться под содержимое */
         }
+                /* Стили для элементов управления аудио */
+        .audio-controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .audio-controls button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+        .audio-controls button:hover {
+            background-color: #0056b3;
+        }
+        .audio-controls input[type="range"] {
+            width: 150px;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -131,7 +154,12 @@
                 <a href="https://www.youtube.com/@TPK33L" class="button" target="_blank">Youtube</a>
             </div>
         </div>
-
+ <!-- Audio Controls -->
+        <div class="audio-controls">
+            <button id="playPauseBtn">Пауза</button>
+            <label for="volumeControl">Громкость: </label>
+            <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.5">
+        </div>
         <!-- Bottom Sections -->
         <div class="bottom-sections">
             <!-- Section 3 -->
@@ -167,5 +195,35 @@
         </div>
         </div>
     </div>
+<!-- Аудио -->
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- JavaScript для управления аудио -->
+    <script>
+        const audio = document.getElementById("backgroundMusic");
+        const playPauseBtn = document.getElementById("playPauseBtn");
+        const volumeControl = document.getElementById("volumeControl");
+
+        // Начальная громкость
+        audio.volume = volumeControl.value;
+
+        // Кнопка Play/Pause
+        playPauseBtn.addEventListener("click", () => {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.textContent = "Пауза";
+            } else {
+                audio.pause();
+                playPauseBtn.textContent = "Играть";
+            }
+        });
+
+        // Регулировка громкости
+        volumeControl.addEventListener("input", () => {
+            audio.volume = volumeControl.value;
+        });
+    </script>
 </body>
 </html>
